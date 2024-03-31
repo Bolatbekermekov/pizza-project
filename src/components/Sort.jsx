@@ -15,8 +15,8 @@ export default function Sort({ value, onChangeSort }) {
 
   ];
   return (
-    <div class="sort">
-      <div class="sort__label">
+    <div className="sort">
+      <div className="sort__label">
         <svg
           width="10"
           height="6"
@@ -33,13 +33,13 @@ export default function Sort({ value, onChangeSort }) {
         <span onClick={() => setOpen(!open)}>{value.name}</span>
       </div>
       {open && (
-        <div class="sort__popup">
+        <div className="sort__popup">
           <ul>
             {sortItems.map((obj, index) => (
               <li
               key={index}
                 onClick={() => onChangeSort(obj)}
-                class={value.sortProperty === obj.sortProperty ? "active" : ""}
+                className={value.sortProperty === obj.sortProperty ? "active" : ""}
               >
                 {obj.name}
               </li>

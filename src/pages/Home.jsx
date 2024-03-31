@@ -11,7 +11,7 @@ export const Home = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [categoryId, setCategoryId] = useState(0);
-  const [currentPage,setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
   const [sortType, setSortType] = useState({
     name: "популярности",
     sortProperty: "rating",
@@ -40,7 +40,7 @@ export const Home = () => {
         }
       });
     window.scrollTo(0, 0); //it is return the top of the page
-  }, [categoryId, sortType, searchValue,currentPage]);
+  }, [categoryId, sortType, searchValue, currentPage]);
 
   const pizzas =
     items?.map((obj) => <PizzaBlock key={obj.id} {...obj} />) || [];
@@ -56,20 +56,23 @@ export const Home = () => {
 
   return (
     <>
-      <div class="container">
-        <div class="content__top">
+      <div className="container">
+        <div className="content__top">
           <Categories
             value={categoryId}
             onCLickCategory={(index) => setCategoryId(index)}
           />
           <Sort value={sortType} onChangeSort={(index) => setSortType(index)} />
         </div>
-        <h2 class="content__title">Все пиццы</h2>
-        <div class="content__items">
-          {isLoading ? [...new Array(6)].map(() => <Skeleton />) : pizzas}
+        <h2 className="content__title">Все пиццы</h2>
+        <div className="content__items">
+          {isLoading
+            ? [...new Array(6)].map((_, index) => <Skeleton key={index} />)
+            : pizzas}
         </div>
-        <Pagination onChangePage={(number)=>setCurrentPage(number)}/>
-        <br /><br />
+        <Pagination onChangePage={(number) => setCurrentPage(number)} />
+        <br />
+        <br />
       </div>
     </>
   );

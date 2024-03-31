@@ -2,33 +2,45 @@ import { useState } from "react";
 
 export default function PizzaBlock(props) {
   const [countPizza, setCountPizza] = useState(0);
-  const [activeSize,setSize] = useState(0)
-  const [activeType,setType] = useState(0)
+  const [activeSize, setSize] = useState(0);
+  const [activeType, setType] = useState(0);
 
-  const typeNames=["тонкое","традиционное"]
+  const typeNames = ["тонкое", "традиционное"];
   return (
-    <div class="pizza-block">
-      <img class="pizza-block__image" src={props.imageUrl} alt="Pizza" />
-      <h4 class="pizza-block__title">{props.title}</h4>
-      <div class="pizza-block__selector">
+    <div className="pizza-block">
+      <img className="pizza-block__image" src={props.imageUrl} alt="Pizza" />
+      <h4 className="pizza-block__title">{props.title}</h4>
+      <div className="pizza-block__selector">
         <ul>
-          {props.types.map((type,index)=>(
-            <li onClick={()=>setType(index)} class={activeType===index ? "active" : ""}>{type===0 ?typeNames[0] : typeNames[1]}</li>
+          {props.types.map((type, index) => (
+            <li
+              key={index}
+              onClick={() => setType(index)}
+              className={activeType === index ? "active" : ""}
+            >
+              {type === 0 ? typeNames[0] : typeNames[1]}
+            </li>
           ))}
-          {/* <li class="active">тонкое</li>
+          {/* <li className="active">тонкое</li>
           <li>традиционное</li> */}
         </ul>
         <ul>
-          {props.sizes.map((size,index) => (
-            <li onClick={()=>setSize(index)} class={activeSize === index? "active" : ""}>{size}см</li>
+          {props.sizes.map((size, index) => (
+            <li
+              key={index}
+              onClick={() => setSize(index)}
+              className={activeSize === index ? "active" : ""}
+            >
+              {size}см
+            </li>
           ))}
         </ul>
       </div>
-      <div class="pizza-block__bottom">
-        <div class="pizza-block__price">{props.price}₽</div>
+      <div className="pizza-block__bottom">
+        <div className="pizza-block__price">{props.price}₽</div>
         <button
           onClick={() => setCountPizza(countPizza + 1)}
-          class="button button--outline button--add"
+          className="button button--outline button--add"
         >
           <svg
             width="12"
