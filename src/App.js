@@ -6,6 +6,8 @@ import NotFound from "./pages/NotFound";
 import "./scss/app.scss";
 import Cart from "./pages/Cart";
 import { createContext, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { decrement, increment } from "./redux/slices/filterSlice";
 
 export const SearchContext = createContext();
 
@@ -24,6 +26,7 @@ function App() {
           </Routes>
         </div>
       </SearchContext.Provider>
+
       {/* <NotFound/> */}
       {/* {items.map((obj) => (
               <PizzaBlock
