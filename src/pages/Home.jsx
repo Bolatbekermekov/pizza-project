@@ -9,17 +9,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCategoryId } from "../redux/slices/filterSlice";
 
 export const Home = () => {
-  const categoryId = useSelector((state) => state.filterSlice.categoryId);
   const dispatch = useDispatch();
   const { searchValue } = useContext(SearchContext);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   // const [categoryId, setCategoryId] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortType, setSortType] = useState({
-    name: "популярности",
-    sortProperty: "rating",
-  });
+  // const [sortType, setSortType] = useState({
+  //   name: "популярности",
+  //   sortProperty: "rating",
+  // });
+
+
+  // const categoryId = useSelector((state) => state.filterSlice.categoryId);
+  // const sortType = useSelector((state)=>state.filterSlice.sort.sortProperty)
+
+const {categoryId ,sort } = useSelector((state)=>state.filterSlice)
+const sortType = sort.sortProperty
 
   // const onChangeCategoryId = (id) => {
   //   dispatch(setCategoryId(id));
@@ -28,8 +34,8 @@ export const Home = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
-    const sortBy = sortType.sortProperty.replace("-", "");
+    const order = sortType.includes("-") ? "asc" : "desc";
+    const sortBy = sortType.replace("-", "");
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `search=${searchValue}` : "";
 
@@ -70,7 +76,7 @@ export const Home = () => {
             value={categoryId}
             onCLickCategory={(index) => dispatch(setCategoryId(index))}
           />
-          <Sort value={sortType} onChangeSort={(index) => setSortType(index)} />
+          <Sort />
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">

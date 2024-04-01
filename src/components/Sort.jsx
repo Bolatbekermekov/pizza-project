@@ -1,19 +1,28 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSortType } from "../redux/slices/filterSlice";
 
-export default function Sort({ value, onChangeSort }) {
+const sortItems = [
+  { name: "популярности (DESK)", sortProperty: "rating" },
+  { name: "популярности (ASK)", sortProperty: "-rating" },
+
+  { name: "цене (DESK)", sortProperty: "price" },
+  { name: "цене (ASK)", sortProperty: "-price" },
+
+  { name: "алфавиту (DESK)", sortProperty: "title" },
+  { name: "алфавиту (ASK)", sortProperty: "-title" },
+];
+
+
+
+
+export default function Sort() {
   const [open, setOpen] = useState(false);
   // const [sortActive,setSortActive] = useState(0)
-  const sortItems = [
-    { name: "популярности (DESK)", sortProperty: "rating" },
-    { name: "популярности (ASK)", sortProperty: "-rating" },
 
-    { name: "цене (DESK)", sortProperty: "price" },
-    { name: "цене (ASK)", sortProperty: "-price" },
+  const dispatch = useDispatch();
+  const sort = useSelector((state) => state.filterSlice.sort);
 
-    { name: "алфавиту (DESK)", sortProperty: "title" },
-    { name: "алфавиту (ASK)", sortProperty: "-title" },
-
-  ];
   return (
     <div className="sort">
       <div className="sort__label">
@@ -30,16 +39,18 @@ export default function Sort({ value, onChangeSort }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{value.name}</span>
+        <span onClick={() => setOpen(!open)}>{sort.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
           <ul>
             {sortItems.map((obj, index) => (
               <li
-              key={index}
-                onClick={() => onChangeSort(obj)}
-                className={value.sortProperty === obj.sortProperty ? "active" : ""}
+                key={index}
+                onClick={() => dispatch(setSortType(obj))}
+                className={
+                  sort.sortProperty === obj.sortProperty ? "active" : ""
+                }
               >
                 {obj.name}
               </li>
