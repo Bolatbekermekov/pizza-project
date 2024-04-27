@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSortType } from "../redux/slices/filterSlice";
+import { selectSort, setSortType } from "../redux/slices/filterSlice";
 
-const sortItems = [
+export const sortItems = [
   { name: "популярности (DESK)", sortProperty: "rating" },
   { name: "популярности (ASK)", sortProperty: "-rating" },
 
@@ -13,18 +13,29 @@ const sortItems = [
   { name: "алфавиту (ASK)", sortProperty: "-title" },
 ];
 
-
-
-
 export default function Sort() {
   const [open, setOpen] = useState(false);
   // const [sortActive,setSortActive] = useState(0)
-
+  const sortRef = useRef();
   const dispatch = useDispatch();
-  const sort = useSelector((state) => state.filterSlice.sort);
+  const sort = useSelector(selectSort);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!sortRef.current.contains(event.target)) {
+        setOpen(false);
+        console.log('click outside ');
+      }
+    };
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"

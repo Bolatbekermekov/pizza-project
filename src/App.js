@@ -8,6 +8,7 @@ import Cart from "./pages/Cart";
 import { createContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { decrement, increment } from "./redux/slices/filterSlice";
+import FullPizza from "./pages/FullPizza";
 
 export const SearchContext = createContext();
 
@@ -22,6 +23,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/pizza/:id" element={<FullPizza/>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

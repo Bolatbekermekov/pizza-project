@@ -1,11 +1,26 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../redux/slices/CartdSlice";
 
 export default function PizzaBlock(props) {
   const [countPizza, setCountPizza] = useState(0);
   const [activeSize, setSize] = useState(0);
   const [activeType, setType] = useState(0);
-
   const typeNames = ["тонкое", "традиционное"];
+  const dispatch = useDispatch()
+    const onClickItem = () => {
+      // Ensure you're referencing the correct state and props
+      const item = {
+        id: props.id,
+        name: props.title, // Assuming you want the title as the name
+        imageUrl: props.imageUrl,
+        price: props.price,
+        size: props.sizes[activeSize], // Use the selected size's value
+        type: typeNames[activeType], // Use the selected type's name
+      };
+      dispatch(addItem(item));
+      setCountPizza(countPizza + 1); // Consider if you want this to happen here or separately
+    }
   return (
     <div className="pizza-block">
       <img className="pizza-block__image" src={props.imageUrl} alt="Pizza" />
@@ -39,7 +54,7 @@ export default function PizzaBlock(props) {
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">{props.price}₽</div>
         <button
-          onClick={() => setCountPizza(countPizza + 1)}
+        onClick={onClickItem}
           className="button button--outline button--add"
         >
           <svg
