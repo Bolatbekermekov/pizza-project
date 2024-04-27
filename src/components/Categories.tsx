@@ -1,6 +1,13 @@
 // import { useState } from "react";
 
-export default function Categories({ value, onCLickCategory }) {
+import { FC } from "react";
+
+type CategoriesProps = {
+  value: number ;
+  onCLickCategory:any;
+}
+
+const Categories:FC<CategoriesProps> = ({ value, onCLickCategory }) =>{
   // const [activeIndex,setActiveIndex] = useState(0)
   const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые"];
   // function onClickIndex(index){
@@ -26,3 +33,4 @@ export default function Categories({ value, onCLickCategory }) {
     </div>
   );
 }
+export default Categories

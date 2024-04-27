@@ -1,20 +1,24 @@
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, { ChangeEvent, useCallback, useContext, useRef, useState } from "react";
 
 import styles from "../scss/search.module.scss";
-import { SearchContext } from "../App";
 import debounce from "debounce";
+import { SearchContext } from "../App";
 
-
+type  SearchContextType =  {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+}
 export const Search = () => {
-  const { searchValue, setSearchValue } = useContext(SearchContext);
+  const {setSearchValue } = useContext(SearchContext) as SearchContextType;
   const [localsearch, setLocalSearch] = useState("")
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
   const onClickSearch = () => {
     setLocalSearch("");
     setSearchValue("")
     // document.querySelector("input").focus();   так нельзя делать, потому что это не реакт
-    inputRef.current.focus();
-  };
+ 
+      inputRef.current?.focus();
+    };
 
 
   const updateSearchValue = useCallback(
@@ -25,7 +29,7 @@ export const Search = () => {
   )
 
 
-  const onChangeInput = (event) =>{
+  const onChangeInput = (event:ChangeEvent<HTMLInputElement>) =>{
     setLocalSearch(event.target.value)
     updateSearchValue(event.target.value)
   }

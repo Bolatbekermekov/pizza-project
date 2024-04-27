@@ -6,7 +6,8 @@ import { selectCard } from "../redux/slices/CartdSlice";
 export default function Header() {
   const { totalprice, items } = useSelector(selectCard);
 
-  const totalAmount = items.reduce((sum, item) => sum + item.count, 0);
+  const totalAmount = items.reduce((sum:number, item:any) => sum + item.count, 0);
+console.log(totalAmount);
 
   const location = useLocation();
 

@@ -7,11 +7,14 @@ import "./scss/app.scss";
 import Cart from "./pages/Cart";
 import { createContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { decrement, increment } from "./redux/slices/filterSlice";
 import FullPizza from "./pages/FullPizza";
 
-export const SearchContext = createContext();
+interface SearchContextType {
+  searchValue: string;
+  setSearchValue: (value: string) => void;
+}
 
+export const SearchContext = createContext<SearchContextType | null>(null);
 function App() {
   const [searchValue, setSearchValue] = useState("");
 

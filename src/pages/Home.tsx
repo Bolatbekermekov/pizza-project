@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { FC, useContext, useEffect, useRef, useState } from "react";
 import Categories from "../components/Categories";
 import Sort, { sortItems } from "../components/Sort";
 import Skeleton from "../components/Skeleton";
@@ -12,17 +12,24 @@ import {
   setCurrentPage,
   setFilters,
 } from "../redux/slices/filterSlice";
-import axios from "axios";
+// import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { getPizzas, setItems } from "../redux/slices/pizzasSlice";
 
-export const Home = () => {
+export const Home: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { searchValue } = useContext(SearchContext);
+
+  interface HomeContextType {
+    searchValue: string;
+    setSearchValue: (value: string) => void;
+  }
+  const { searchValue } = useContext(SearchContext) as HomeContextType;
   // const [items, setItems] = useState([]);
   // const [isLoading, setIsLoading] = useState(true);
+
+  //@ts-ignore
   const { isLoading, error } = useSelector((state) => state.pizzasSlice);
 
   const isSearch = useRef(false);
@@ -37,6 +44,9 @@ export const Home = () => {
 
   // const categoryId = useSelector((state) => state.filterSlice.categoryId);
   // const sortType = useSelector((state)=>state.filterSlice.sort.sortProperty)
+  
+  
+  //@ts-ignore
   const items = useSelector((state) => state.pizzasSlice.items);
   const { categoryId, sort, currentPage } = useSelector(selectFilter);
   // console.log("required",categoryId);
@@ -79,7 +89,9 @@ export const Home = () => {
       // );
       // dispatch(setItems(data))
 
-      dispatch(getPizzas({ order, sortBy, category, search, currentPage }));
+      dispatch(
+        //@ts-ignore
+        getPizzas({ order, sortBy, category, search, currentPage }));
     } catch (error) {
       alert("Не удалось загрузить пиццы");
       dispatch(setItems([]));
@@ -97,7 +109,7 @@ export const Home = () => {
     //     setItems([]);
     //   });
   };
-console.log('window',window.location);
+  console.log("window", window.location);
   useEffect(() => {
     // Only navigate if the state has changed after the component has mounted (not on the initial mount)
     if (isMounted.current) {
@@ -139,7 +151,7 @@ console.log('window',window.location);
   }, [categoryId, sort.sortProperty, , searchValue, currentPage]);
 
   const pizzas =
-    items?.map((obj) => <PizzaBlock key={obj.id} {...obj} />) || [];
+    items?.map((obj:any) => <PizzaBlock key={obj.id} {...obj} />) || [];
 
   ////SEARCH----------------------------
 
@@ -156,7 +168,7 @@ console.log('window',window.location);
         <div className="content__top">
           <Categories
             value={categoryId}
-            onCLickCategory={(index) => dispatch(setCategoryId(index))}
+            onCLickCategory={(index: number) => dispatch(setCategoryId(index))}
           />
           <Sort />
         </div>
@@ -179,7 +191,7 @@ console.log('window',window.location);
 
         <Pagination
           currentPage={currentPage}
-          onChangePage={(number) => dispatch(setCurrentPage(number))}
+          onChangePage={(number: number) => dispatch(setCurrentPage(number))}
         />
         <br />
         <br />

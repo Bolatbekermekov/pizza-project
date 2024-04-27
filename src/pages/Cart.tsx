@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 
 import styles from "../scss/cart.module.scss";
 import { Link } from "react-router-dom";
@@ -7,14 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearItems, selectCard } from "../redux/slices/CartdSlice";
 import { CartEmpty } from "../components/CartEmpty";
 
-export const Cart = () => {
+export const Cart: FC = () => {
   const {totalprice,items} = useSelector(selectCard)
   const dispatch = useDispatch();
-  const totalAmount = items.reduce((sum, item)=>(sum + item.count),0)
+  const totalAmount = items.reduce((sum: number, item: any)=>(sum + item.count),0)
 
   const onClickClear = () => {
     if (window.confirm("are you sure to remove all pizaas?")) {
-      dispatch(clearItems());
+      dispatch(clearItems(null));
     }
   };
 
@@ -101,7 +101,7 @@ export const Cart = () => {
         </div>
         <div className="content__items">
           {
-            items.map((item)=>(
+            items.map((item:any)=>(
   
               <CardItem key={item.id} {...item}/>
             ))
